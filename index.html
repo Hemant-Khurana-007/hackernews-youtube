@@ -190,6 +190,8 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.5s forwards;
+            display: flex;           
+            flex-direction: column;  
         }
         
         @keyframes fadeInUp {
@@ -240,9 +242,9 @@
         
         .video-info {
             padding: 20px;
-            min-height: 180px;
             display: flex;
             flex-direction: column;
+            flex: 1;
         }
         
         .video-title {
@@ -270,6 +272,7 @@
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
             margin-top: auto;
+            
         }
         
         .meta-item {
@@ -1043,6 +1046,7 @@
 </body>
 
 </html>
+
 
 
 
