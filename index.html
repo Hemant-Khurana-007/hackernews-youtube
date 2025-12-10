@@ -480,10 +480,10 @@
             
             <div class="filter-group">
                 <label for="filterPoints"><i class="fas fa-caret-up"></i> Minimum Upvotes</label>
-                <input type="range" id="filterPoints" class="filter-slider" min="10" max="1000" value="20">
+                <input type="range" id="filterPoints" class="filter-slider" min="10" max="1000" value="10">
                 <div class="slider-values">
-                    <span id="minPointsValue">20</span>
-                    <span id="maxPointsValue">1000+</span>
+                    <span id="minPointsValue">10</span>
+                    <span id="maxPointsValue">1000</span>
                 </div>
             </div>
             
@@ -956,8 +956,8 @@
             // Reset filters button
             elements.resetFilters.addEventListener('click', () => {
                 elements.searchTitle.value = '';
-                elements.filterPoints.value = 20;
-                elements.minPointsValue.textContent = '20';
+                elements.filterPoints.value = 10;
+                elements.minPointsValue.textContent = '10';
                 
                 // Reset date range to last 6 months
                 const sixMonthsAgo = new Date();
@@ -967,7 +967,7 @@
                 
                 currentFilters = {
                     title: '',
-                    minPoints: 20,
+                    minPoints: 10,
                     dateFrom: elements.dateFrom.value,
                     dateTo: elements.dateTo.value
                 };
@@ -1046,6 +1046,7 @@
 </body>
 
 </html>
+
 
 
 
