@@ -621,9 +621,9 @@
         function initializeFilters() {
             // Set up points slider
             elements.filterPoints.addEventListener('input', function() {
-                elements.filterPoints.value = 10;
-                elements.minPointsValue.textContent = '10';
-                    currentFilters.minPoints = 10;
+                const val = this.value;
+                elements.minPointsValue.textContent = val;
+                currentFilters.minPoints = Number(val);
             });
             
             // Set default date range to last 6 months
@@ -1046,6 +1046,7 @@
 </body>
 
 </html>
+
 
 
 
