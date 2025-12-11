@@ -25,6 +25,7 @@ function createVideoCard(video, index) {
     const videoId = video.video_id || extractVideoId(video.url);
     const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${CONFIG.thumbnailQuality}.jpg`;
     const youtubeUrl = video.url || (videoId ? `https://youtu.be/${videoId}` : '#');
+    const cleanTitle = (video.title || 'Untitled Video').replace(/\[video\]/gi, '').trim();
     
     card.innerHTML = `
         <div class="thumbnail-container">
@@ -36,8 +37,8 @@ function createVideoCard(video, index) {
             </div>
         </div>
         <div class="video-info">
-            <div class="video-title">
-                <a href="${youtubeUrl}" target="_blank" title="${video.title}">${(video.title || 'Untitled Video').replace(/\[video\]/gi, '').trim()}</a>
+        <div class="video-title">
+                <a href="${youtubeUrl}" class="video-title-link" data-video-id="${videoId}" data-video-title="${cleanTitle}" title="${cleanTitle}">${cleanTitle}</a>
             </div>
             <div class="meta-info">
                 <div class="meta-item">
@@ -51,7 +52,7 @@ function createVideoCard(video, index) {
                 </div>
             </div>
             <div class="links">
-                <a href="${youtubeUrl}" class="btn btn-primary" target="_blank">
+                <a href="${youtubeUrl}" class="btn btn-primary" data-video-id="${videoId}" data-video-title="${cleanTitle}">
                     <i class="fab fa-youtube"></i> Watch
                 </a>
             </div>

@@ -1,4 +1,4 @@
-import { STATE, updateState } from './state.js';
+import { CONFIG, STATE, updateState } from './state.js';
 import { updateFiltersFromUI, resetFilters } from './filters.js';
 
 export function setupEventListeners(app, elements) {
@@ -51,6 +51,61 @@ export function setupEventListeners(app, elements) {
                 updateState({ currentPage: page });
                 app.applyFiltersAndSort();
             }
+        }
+    });
+
+    // Inline video player: open modal when Watch button is clicked
+    elements.videoGrid.addEventListener('click', (event) => {
+        const watchBtn = event.target.closest('[data-video-id]');
+        if (!watchBtn) return;
+
+        event.preventDefault();
+
+        const videoId = watchBtn.dataset.videoId;
+        const title = watchBtn.dataset.videoTitle || '';
+        if (!videoId) return;
+
+        if (!elements.videoModal || !elements.videoPlayer) {
+            // Fallback: open in a new tab if modal elements are missing
+            window.open(`https://youtu.be/${videoId}`, '_blank');
+            return;
+        }
+
+        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        elements.videoPlayer.src = embedUrl;
+        if (elements.videoModalTitle) {
+            elements.videoModalTitle.textContent = title;
+        }
+        elements.videoModal.classList.add('is-visible');
+        elements.videoModal.setAttribute('aria-hidden', 'false');
+    });
+
+    function closeVideoModal() {
+        if (!elements.videoModal || !elements.videoPlayer) return;
+        elements.videoModal.classList.remove('is-visible');
+        elements.videoModal.setAttribute('aria-hidden', 'true');
+        elements.videoPlayer.src = '';
+    }
+
+    if (elements.closeVideoModal) {
+        elements.closeVideoModal.addEventListener('click', () => {
+            closeVideoModal();
+        });
+    }
+
+    if (elements.videoModal) {
+        elements.videoModal.addEventListener('click', (event) => {
+            // Close when clicking on the dark backdrop
+            if (event.target.classList.contains('video-modal') ||
+                event.target.classList.contains('video-modal-backdrop')) {
+                closeVideoModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && elements.videoModal?.classList.contains('is-visible')) {
+            closeVideoModal();
         }
     });
 }
